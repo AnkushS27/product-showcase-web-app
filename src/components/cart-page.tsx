@@ -58,7 +58,7 @@ export function CartPage() {
             <Card key={item.id}>
               <CardContent className="p-6">
                 <div className="flex gap-4">
-                  <div className="w-24 h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+                  <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
                     <Image
                       src={item.image || "/placeholder.svg"}
                       alt={item.title}
