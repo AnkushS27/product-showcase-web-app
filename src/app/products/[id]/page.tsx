@@ -1,25 +1,27 @@
-import { notFound } from "next/navigation"
-import { fetchProduct, fetchProducts } from "@/lib/api"
-import { ProductDetail } from "@/components/product-detail"
+'use client'
 
-// Generate static params for all products (SSG)
-export async function generateStaticParams() {
-  const products = await fetchProducts()
+import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
+import { ProductDetail } from '@/components/product-detail'
+import { fetchProduct } from '@/lib/api'
+import { Product } from '@/lib/types'
 
-  return products.map((product) => ({
-    id: product.id.toString(),
-  }))
-}
+export default function ProductPage() {
+  const params = useParams()
+  const [product, setProduct] = useState<Product | null>(null)
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await fetchProduct(params.id)
+  useEffect(() => {
+    async function getData() {
+      const res = await fetchProduct(params.id as string)
+      setProduct(res)
+    }
 
-  if (!product) {
-    notFound()
-  }
+    if (params.id) {
+      getData()
+    }
+  }, [params.id])
+
+  if (!product) return <div>Loading...</div>
 
   return <ProductDetail product={product} />
 }
-
-// Enable ISR - regenerate page every 60 minutes
-export const revalidate = 3600
