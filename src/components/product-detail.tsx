@@ -44,7 +44,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Image */}
           <div className="space-y-4">
-            <div className="aspect-square overflow-hidden rounded-lg bg-gray-50">
+            <div className="aspect-square overflow-hidden rounded-lg shadow">
               <Image
                 src={product.image || "/placeholder.svg"}
                 alt={product.title}
